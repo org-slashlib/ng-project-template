@@ -1,12 +1,14 @@
 "use strict";
 
-const path    = require( "path" );
+const path      = require( "path" );
 
-const ANGULAR = "angular";
-const BUILD   = "build";
-const CONFIG  = "config";
-const DIST    = "dist";
-const LIB     = "lib";
+const ANGULAR   = "angular";
+const BUILD     = "build";
+const CONFIG    = "config";
+const DIST      = "dist";
+const LIB       = "lib";
+
+const SLASHLIBS = "@org.slashlib-*"
 
 module.exports = function( grunt ) {
   // set grunt options
@@ -21,7 +23,7 @@ module.exports = function( grunt ) {
       fragments:    [                               // search fragments in library directories
                       "**/angular.lib.json"         // relative to library directory
                     ],
-      libs:         [ "lib-*" ],                    // directory pattern(s) for libraries
+      libs:         [ SLASHLIBS ],                  // directory pattern(s) for libraries
     },
 
     clean: {
@@ -55,23 +57,27 @@ module.exports = function( grunt ) {
         files: [{
           expand:   true,
           src:      [
-                      "lib-*/**/*",                             // sources used for building angular libs
-                      "!lib-*/config/**/*"                      // do not copy configuration tree
+                      `${SLASHLIBS}/**/*`,                            // sources used for building angular libs
+                      `!${SLASHLIBS}/*.bat`,                          // do not copy windows batchfiles
+                      `!${SLASHLIBS}/*.lnk`,                          // do not copy windows desktop links
+                      `!${SLASHLIBS}/config/**/*`,                    // do not copy configuration tree
+                      `!${SLASHLIBS}/node-*/**/*`,                    // do not copy node executables from lirary directories (windows)
+                      `!${SLASHLIBS}/node_modules`                    // do not copy node_modules from lirary directories
                     ],
           dest:     BUILD,
           rename:   function( dest, src ) {
                       // stick to posix, as grunt can handle win32 <=> posix conversions
-                      return path.posix.join( dest, src.replace( /^[\/\\]?lib-([^\/\\]*)/, "$1/" ));
+                      return path.posix.join( dest, src.replace( /^[\/\\]?@org.slashlib-([^\/\\]*)/, "$1/" ));
                     }
         },{
           expand:   true,
           src:      [
-                      "lib-*/config/angular/*",                 // sources used for building angular libs
-                      "!lib-*/config/angular/angular.lib.json"  // do not copy angular.json library fragment
+                      `${SLASHLIBS}/config/angular/*`,                // sources used for building angular libs
+                      `!${SLASHLIBS}/config/angular/angular.lib.json` // do not copy angular.json library fragment
                     ],
           dest:     BUILD,
           rename:   function( dest, src ) {
-                      src = src.replace( /^[\/\\]?lib-([^\/\\]*)/, "$1/" );
+                      src = src.replace( /^[\/\\]?@org.slashlib-([^\/\\]*)/, "$1/" );
                       src = src.replace( "angular", "" );
                       src = src.replace( "config",  "" );
                       // stick to posix, as grunt can handle win32 <=> posix conversions

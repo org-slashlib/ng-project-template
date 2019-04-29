@@ -9,6 +9,7 @@
   },
   "main": "index.js",
   "scripts": {
+    "build": "cd build && ng build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -37,6 +38,7 @@
     "@angular/platform-browser": "^7.2.14",
     "@angular/platform-browser-dynamic": "^7.2.14",
     "@angular/router": "^7.2.14",
+    "@org.slashlib/ng-services-core": "^0.1.1",
     "core-js": "^3.0.1",
     "rxjs": "^6.5.1",
     "zone.js": "^0.8.29"

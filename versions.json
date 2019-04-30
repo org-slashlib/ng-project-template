@@ -1,7 +1,16 @@
 {
-    "current" : "0.1.0",
+    "current" : "0.1.1",
+    "0.1.1" : {
+                "comment"   :   "released on 29.04.2019",
+                "format"    :   { "version" : "1.0" },
+                "added"     :   [
+                                  [ "@angular/cdk",                      "package",  "dependency (dev)",  "build process (@org.slashlib/ng-providers-mat-svg)" ],
+                                  [ "@angular/material",                 "package",  "dependency (dev)",  "build process (@org.slashlib/ng-providers-mat-svg)" ],
+                                  [ "@org.slashlib/ng-services-core",    "package",  "dependency (dev)",  "build process (@org.slashlib/ng-services-i18n)"     ]
+                                ]
+              },
     "0.1.0" : {
-                "comment"   :   "in preparation",
+                "comment"   :   "released on 29.04.2019",
                 "format"    :   { "version" : "1.0" },
                 "added"     :   [
                                   [ "config/angular/angular.json",        "file",     "source",           "angular building template"                    ],

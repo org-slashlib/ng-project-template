@@ -73,6 +73,7 @@ module.exports = function( grunt ) {
           expand:   true,
           src:      [
                       `${SLASHLIBS}/config/angular/*`,                // sources used for building angular libs
+                      `${SLASHLIBS}/config/karma/*`,                  // karma configuration for ng test
                       `!${SLASHLIBS}/config/angular/angular.lib.json` // do not copy angular.json library fragment
                     ],
           dest:     BUILD,
@@ -80,6 +81,7 @@ module.exports = function( grunt ) {
                       src = src.replace( /^[\/\\]?@org.slashlib-([^\/\\]*)/, "$1/" );
                       src = src.replace( "angular", "" );
                       src = src.replace( "config",  "" );
+                      src = src.replace( "karma",   "" );
                       // stick to posix, as grunt can handle win32 <=> posix conversions
                       return path.posix.join( dest, src );
                     }
